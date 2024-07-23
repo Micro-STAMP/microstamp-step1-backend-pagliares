@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
       @ExceptionHandler is an annotation used to handle the SPECIFIC exceptions and
       sending the custom responses to the client
 
-      @TODO Note that in the employee microservice, instead of using ResourceNotFoundException as the first argument
+      @TODO Note that in the step2 microservice, instead of using ResourceNotFoundException as the first argument
       my implementation user Exception exception
      */
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     // Handle here other exceptions in addition to ResourceNotFoundException
     // Notice we return HttpStatus.INTERNAL_SERVER_ERROR and not
     // HttpStatus.BAD_REQUEST or HttpStatus.NOT_FOUND
-    // You can test this exception handler by trying to save a new employee  with a POST request
+    // You can test this exception handler by trying to save a new responsibility with a POST request
     // without the body in the request on Postman, for example.
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDetails> handleGlobalException(
