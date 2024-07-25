@@ -17,95 +17,23 @@ import java.util.Optional;
 public class SystemSafetyConstraintServiceImpl implements SystemSafetyConstraintService {
 
     private SystemSafetyConstraintRepository SystemSafetyConstraintRepository;
-    // Decided not to use ModelMapper. Used SystemSafetyConstraintMapper instead
-    // private ModelMapper modelMapper;
 
-    /*
-                     CONVERTING SystemSafetyConstraintDTO TO SystemSafetyConstraint JPA ENTITY
-
-     FIRST WAY: Manual conversion
-
-     SystemSafetyConstraint SystemSafetyConstraint = new SystemSafetyConstraint(
-                                             systemSafetyConstraintDto.getId(),
-                                             systemSafetyConstraintDto.getSystemSafetyConstraintTitle(),
-                                             systemSafetyConstraintDto.getSystemSafetyConstraintDescription(),
-                                             systemSafetyConstraintDto.getSystemSafetyConstraintCode()
-                                            );
-
-     SECOND WAY: Create a method to perform the conversion
-
-     SystemSafetyConstraint SystemSafetyConstraint = SystemSafetyConstraintMapper.convertSystemSafetyConstraintDtoToSystemSafetyConstraint(systemSafetyConstraintDto);
-
-     THIRD WAY: ModelMapper
-
-     SystemSafetyConstraint SystemSafetyConstraint = modelMapper.map(systemSafetyConstraintDto, SystemSafetyConstraint.class);
-
-     FOURTH WAY: MapStruct
-
-     SystemSafetyConstraint SystemSafetyConstraint = AutoSystemSafetyConstraintMapper.MAPPER.mapToSystemSafetyConstraint(systemSafetyConstraintDto);
-
-                     CONVERTING SystemSafetyConstraint JPA ENTITY TO SystemSafetyConstraint DTO
-
-     FIRST WAY: Manual conversion
-
-     SystemSafetyConstraintDto savedSystemSafetyConstraintDto = new SystemSafetyConstraintDto(
-                                                            savedSystemSafetyConstraint.getId(),
-                                                            savedSystemSafetyConstraint.getSystemSafetyConstraintTitle(),
-                                                            savedSystemSafetyConstraint.getSystemSafetyConstraintDescription(),
-                                                            savedSystemSafetyConstraint.getSystemSafetyConstraintCode()
-                                                          );
-
-     SECOND WAY: Create a method to perform the conversion
-
-     return SystemSafetyConstraintMapper.convertSystemSafetyConstraintToSystemSafetyConstraintDto(savedSystemSafetyConstraint);
-
-     THIRD WAY: ModelMapper
-
-     SystemSafetyConstraintDto savedSystemSafetyConstraintDto = modelMapper.map(savedSystemSafetyConstraint, SystemSafetyConstraintDto.class);
-
-     FOURTH WAY: MapStruct
-
-     return AutoSystemSafetyConstraintMapper.MAPPER.mapToSystemSafetyConstraintDto(savedSystemSafetyConstraint);
-
-     */
     @Override
     public SystemSafetyConstraintDto saveSystemSafetyConstraint(SystemSafetyConstraintDto systemSafetyConstraintDto) {
-        Optional<SystemSafetyConstraint> optionalSystemSafetyConstraint = SystemSafetyConstraintRepository.findByCode(systemSafetyConstraintDto.getSystemSafetyConstraintCode());
+        Optional<SystemSafetyConstraint> optionalSystemSafetyConstraint = SystemSafetyConstraintRepository.findBySystemSafetyConstraintCode(systemSafetyConstraintDto.getSystemSafetyConstraintCode());
 
         if(optionalSystemSafetyConstraint.isPresent()){
             throw new SystemSafetyConstraintAlreadyExistsException("SystemSafetyConstraint name already exists");
         }
-        // SECOND WAY: Create a method to perform the conversion
         SystemSafetyConstraint systemSafetyConstraint = SystemSafetyConstraintMapper.convertSystemSafetyConstraintDtoToSystemSafetyConstraint(systemSafetyConstraintDto);
         SystemSafetyConstraint savedSystemSafetyConstraint = SystemSafetyConstraintRepository.save(systemSafetyConstraint);
         return SystemSafetyConstraintMapper.convertSystemSafetyConstraintToSystemSafetyConstraintDto(savedSystemSafetyConstraint);
 
     }
 
-    /*
-                      CONVERTING SystemSafetyConstraint JPA ENTITY TO SystemSafetyConstraintDTO
-
-         FIRST WAY: Manual conversion
-         SystemSafetyConstraintDto SystemSafetyConstraintDto = new SystemSafetyConstraintDto(
-                                                          SystemSafetyConstraint.getId()
-                                                          SystemSafetyConstraint.getSystemSafetyConstraintTitle(),
-                                                          SystemSafetyConstraint.getSystemSafetyConstraintDescription(),
-                                                          SystemSafetyConstraint.getSystemSafetyConstraintCode()
-                                                         );
-
-         SECOND WAY: Create a method to perform the conversion
-        return SystemSafetyConstraintMapper.convertSystemSafetyConstraintToSystemSafetyConstraintDto(SystemSafetyConstraint);
-
-         THIRD WAY: ModelMapper
-         return modelMapper.map(SystemSafetyConstraint, SystemSafetyConstraintDto.class);
-
-         FOURTH WAY: MapStruct
-         return AutoSystemSafetyConstraintMapper.MAPPER.mapToSystemSafetyConstraintDto(SystemSafetyConstraint);
-     */
     @Override
     public SystemSafetyConstraintDto getSystemSafetyConstraintByCode(String SystemSafetyConstraintCode) {
-        // @TODO Contrast with the mechanism used on saveSystemSafetyConstraint with Optional and isPresent()
-        SystemSafetyConstraint systemSafetyConstraint = SystemSafetyConstraintRepository.findByCode(SystemSafetyConstraintCode).orElseThrow(
+        SystemSafetyConstraint systemSafetyConstraint = SystemSafetyConstraintRepository.findBySystemSafetyConstraintCode(SystemSafetyConstraintCode).orElseThrow(
                 () -> new ResourceNotFoundException("systemSafetyConstraint", "SystemSafetyConstraintCode", SystemSafetyConstraintCode)
         );
 

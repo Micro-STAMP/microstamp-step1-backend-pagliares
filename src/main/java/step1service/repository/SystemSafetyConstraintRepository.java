@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface SystemSafetyConstraintRepository extends JpaRepository<SystemSafetyConstraint,Long> {
 
-    Optional<SystemSafetyConstraint> findByCode(String systemSafetyConstraintCode);
+    Optional<SystemSafetyConstraint> findBySystemSafetyConstraintCode(String systemSafetyConstraintCode);
 
 }

@@ -8,18 +8,16 @@ public class SystemSafetyConstraintMapper {
     public static SystemSafetyConstraintDto convertSystemSafetyConstraintToSystemSafetyConstraintDto(SystemSafetyConstraint systemSafetyConstraint){
         return new SystemSafetyConstraintDto(
                 systemSafetyConstraint.getId(),
-                systemSafetyConstraint.getTitle(),
-                systemSafetyConstraint.getDescription(),
-                systemSafetyConstraint.getCode()
+                systemSafetyConstraint.getSystemSafetyConstraintCode(),
+                systemSafetyConstraint.getSystemSafetyConstraintDescription()
         );
     }
 
     public static SystemSafetyConstraint convertSystemSafetyConstraintDtoToSystemSafetyConstraint(SystemSafetyConstraintDto systemSafetyConstraintDto){
         return new SystemSafetyConstraint(
                 systemSafetyConstraintDto.getId(),
-                systemSafetyConstraintDto.getSystemSafetyConstraintName(),
-                systemSafetyConstraintDto.getSystemSafetyConstraintDescription(),
-                systemSafetyConstraintDto.getSystemSafetyConstraintCode()
+                systemSafetyConstraintDto.getSystemSafetyConstraintCode(),
+                systemSafetyConstraintDto.getSystemSafetyConstraintDescription()
         );
     }
 }
