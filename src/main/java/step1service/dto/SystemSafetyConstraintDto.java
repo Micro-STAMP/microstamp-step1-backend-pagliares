@@ -11,8 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SystemSafetyConstraintDto {
     private Long id;
-    private String SystemSafetyConstraintName;
-    private String SystemSafetyConstraintDescription;
-    private String SystemSafetyConstraintCode;
+    private String systemSafetyConstraintCode;
+    private String systemSafetyConstraintDescription;
 
 }
